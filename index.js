@@ -29,7 +29,6 @@ async function run() {
     app.post("/user", async (req, res) => {
       const user = req.body;
       const result = await usersCollection.insertOne(user);
-      console.log(`A document was inserted with the _id: ${result.insertedId}`);
       res.json(result);
     });
 
@@ -66,7 +65,6 @@ async function run() {
     app.post("/product", async (req, res) => {
       const product = req.body;
       const result = await productCollection.insertOne(product);
-      console.log(`A document was inserted with the _id: ${result.insertedId}`);
       res.json(result);
     });
 
@@ -89,7 +87,6 @@ async function run() {
     app.post("/pharches", async (req, res) => {
       const ride = req.body;
       const result = await userWatchCollection.insertOne(ride);
-      console.log(`A document was inserted with the _id: ${result.insertedId}`);
       res.json(result);
     });
 
@@ -111,7 +108,6 @@ async function run() {
     app.post("/review", async (req, res) => {
       const review = req.body;
       const result = await reviewCollection.insertOne(review);
-      console.log(`A document was inserted with the _id: ${review.insertedId}`);
       res.json(result);
     });
     // get all review
@@ -134,6 +130,14 @@ async function run() {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
       const result = await userWatchCollection.deleteOne(query);
+      res.json(result);
+    });
+
+    app.put("/order/status", async (req, res) => {
+      const order = req.body;
+      const filter = { _id: ObjectId(order.id) };
+      const updateDoc = { $set: { status: 2 } };
+      const result = await userWatchCollection.updateOne(filter, updateDoc);
       res.json(result);
     });
   } finally {
